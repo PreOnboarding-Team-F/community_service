@@ -42,8 +42,18 @@ async function getNoticePost(id) {
   return post;
 }
 
+async function getOperationPost(id) {
+  const post = await boardRepository.getPost(id);
+
+  if (post.board_type !== boardRepository.BoardType.OPERATION) {
+    //throw new NotFoundException();
+  }
+  return post;
+}
+
 export default {
   createPost,
   getFreePost,
   getNoticePost,
+  getOperationPost,
 };

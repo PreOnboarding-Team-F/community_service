@@ -24,8 +24,15 @@ async function getNoticePost(req, res) {
   res.status(200).send({ data: post });
 }
 
+async function getOperationPost(req, res) {
+  const id = parseInt(req.param('id'));
+  const post = await boardService.getOperationPost(id);
+  res.status(200).send({ data: post });
+}
+
 export default {
   createPost,
   getFreePost,
   getNoticePost,
+  getOperationPost,
 };
