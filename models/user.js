@@ -4,6 +4,16 @@ export const getUserById = async id => {
   return await prismaClient.user.findUnique({ where: { user_id: id } });
 };
 
+export const getUserByNickname = async nickname => {
+  return await prismaClient.user.findUnique({ where: { nickname } });
+};
+
+export const getUserByPhoneNumber = async phonbeNumber => {
+  return await prismaClient.user.findUnique({
+    where: { phone_number: phonbeNumber },
+  });
+};
+
 export const createUser = async ({
   id,
   hashedPassword,
