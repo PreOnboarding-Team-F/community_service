@@ -23,6 +23,11 @@ async function createPost(title, content, boardType, userId, userRole) {
   await boardRepository.createPost(title, content, boardType, userId);
 }
 
+async function getFreePost(id) {
+  return await boardRepository.getPost(id);
+}
+
 export default {
   createPost,
+  getFreePost,
 };

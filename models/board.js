@@ -16,7 +16,30 @@ async function createPost(title, content, boardType, userId) {
   });
 }
 
+async function getPost(id) {
+  return await prismaClient.board.findUnique({
+    where: {
+      id: parseInt(id),
+    },
+    select: {
+      id: true,
+      title: true,
+      content: true,
+      board_type: true,
+      image_url: true,
+      user: {
+        select: {
+          user_id: true,
+          nickname: true,
+          role: true,
+        },
+      },
+    },
+  });
+}
+
 export default {
   BoardType,
   createPost,
+  getPost,
 };
