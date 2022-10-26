@@ -18,7 +18,7 @@ function checkCreatePermissions(userRole, boardType) {
 
 async function createPost(title, content, boardType, userId, userRole) {
   if (!checkCreatePermissions(userRole, boardType)) {
-    //throw new BadRequestException();
+    //throw new UnauthorizedException('잘못된 접근 권한 입니다.');
   }
   await boardRepository.createPost(title, content, boardType, userId);
 }
