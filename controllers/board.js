@@ -14,12 +14,18 @@ async function createPost(req, res) {
 }
 async function getFreePost(req, res) {
   const id = parseInt(req.param('id')); //머지 후 validate 에서 integer로 변환
-
   const post = await boardService.getFreePost(id);
-
   res.status(200).send({ data: post });
 }
+
+async function getNoticePost(req, res) {
+  const id = parseInt(req.param('id'));
+  const post = await boardService.getNoticePost(id);
+  res.status(200).send({ data: post });
+}
+
 export default {
   createPost,
   getFreePost,
+  getNoticePost,
 };
