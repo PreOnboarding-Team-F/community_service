@@ -1,10 +1,10 @@
+import 'express-async-errors';
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import http from 'http';
 import routes from './routes/index.js';
-import 'express-async-errors';
 import { globalErrorHandler } from './middleware/globalErrorHandler.js';
 import { errorHandler } from './middleware/errorHandler.js';
 dotenv.config();
@@ -20,7 +20,6 @@ app.use(cors(corsOption));
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(routes);
-
 // Error Middleware
 app.use(globalErrorHandler);
 app.use(errorHandler);
