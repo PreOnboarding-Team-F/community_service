@@ -4,6 +4,9 @@ import morgan from 'morgan';
 import dotenv from 'dotenv';
 import http from 'http';
 import routes from './routes/index.js';
+import 'express-async-errors';
+import { globalErrorHandler } from './middleware/globalErrorHandler.js';
+import { errorHandler } from './middleware/errorHandler.js';
 dotenv.config();
 
 const corsOption = {
@@ -19,6 +22,8 @@ app.use(express.json());
 app.use(routes);
 
 // Error Middleware
+app.use(globalErrorHandler);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
