@@ -31,20 +31,16 @@ export const readAllUserGender = async () => {
   for (const iterator of userGender) {
     if (iterator.gender === 'male') {
       userMale = iterator._count.gender;
-    } else if (iterator.gender === 'female') {
-      userFemale = iterator._count.gender;
     } else {
-      console.log(iterator.gender);
+      userFemale = iterator._count.gender;
     }
   }
 
   for (const iterator of userGenderByBoard) {
     if (iterator.gender === 'male') {
       boardWriterMale = Number(iterator.genderCount);
-    } else if (iterator.gender === 'female') {
-      boardWriterFemale = Number(iterator.genderCount);
     } else {
-      console.log(iterator.gender);
+      boardWriterFemale = Number(iterator.genderCount);
     }
   }
 
@@ -145,6 +141,29 @@ export const getAccesstime = async () => {
   result.totalCount = totalCount;
   result.ageRatio = ageRatio;
   result.genderRatio = genderRatio;
+  return result;
+};
+
+export const getVisit = async () => {
+  let result = {};
+
+  const data = await statisticsRepository.readAllUserByVisit();
+
+  const genderCount = { male: 0, female: 0 };
+  const userAgeCountList = new Array(10).fill(0);
+
+  for (const iterator of data) {
+    userAgeCountList[Math.floor(iterator.age / 10)] += 1;
+    if (iterator.gender === 'male') {
+      genderCount.male += 1;
+    } else {
+      genderCount.female += 1;
+    }
+  }
+
+  result.total = data.length;
+  result.gender = genderCount;
+  result.age = userAgeCountList;
   return result;
 };
 

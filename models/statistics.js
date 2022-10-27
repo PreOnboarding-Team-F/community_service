@@ -39,3 +39,10 @@ export const readAllUserByAccessTime = async () => {
     FROM user JOIN visit_log v ON v.user_id = user.id;`;
   return data;
 };
+
+export const readAllUserByVisit = async () => {
+  const data = prismaClient.$queryRaw`
+    SELECT YEAR(NOW())-LEFT(user.birth,4) +1 AS age, user.gender
+    FROM user JOIN visit_log v ON v.user_id = user.id;`;
+  return data;
+};
