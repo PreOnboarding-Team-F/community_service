@@ -16,7 +16,16 @@ async function createPost(title, content, boardType, userId) {
   });
 }
 
-async function getPost(id) {
+async function updatePost(id, updateData) {
+  await prismaClient.board.update({
+    where: {
+      id: parseInt(id),
+    },
+    data: updateData,
+  });
+}
+
+async function findById(id) {
   return await prismaClient.board.findUnique({
     where: {
       id: parseInt(id),
@@ -29,6 +38,7 @@ async function getPost(id) {
       image_url: true,
       user: {
         select: {
+          id: true,
           user_id: true,
           nickname: true,
           role: true,
@@ -40,5 +50,6 @@ async function getPost(id) {
 
 export default {
   createPost,
-  getPost,
+  updatePost,
+  findById,
 };

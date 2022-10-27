@@ -6,17 +6,20 @@ import {
 import boardController from '../controllers/board.js';
 import { body } from 'express-validator';
 import express from 'express';
-import { validate } from '../middleware/validator.js';
+import { isLogin } from '../middleware/auth.js';
+import { validate } from '../middleware/validate.js';
 
 const router = express.Router();
+
+const validateBoardType = value => {
+  if (value === 'notice' || value === 'free' || value === 'operation')
+    return true;
+};
 
 const validateCreatePost = [
   body('boardType')
     .trim()
-    .custom(value => {
-      if (value === 'notice' || value === 'free' || value === 'operation')
-        return true;
-    })
+    .custom(validateBoardType)
     .withMessage('boardType이 유효하지 않습니다.'),
   body('title').notEmpty().withMessage('title을 입력해 주세요.'),
   body('content').notEmpty().withMessage('content를 입력해 주세요'),
@@ -26,11 +29,14 @@ const validateCreatePost = [
 router.post(
   '/post',
   validateCreatePost,
+  isLogin,
   checkCreatePermissions,
   boardController.createPost
 );
+router.patch('/post/:id', isLogin, boardController.updatePost);
 router.get(
   '/operation/:id',
+  isLogin,
   checkGetOperationPermission,
   boardController.getOperationPost
 );
