@@ -38,5 +38,7 @@ const validateCredeital = [
 ];
 // 회원 가입
 router.post('/register', validateCredeital, userController.createUser);
+// 로그인
+router.post('/login', userController.login);
 
 export default router;

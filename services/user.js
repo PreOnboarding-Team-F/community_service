@@ -32,3 +32,18 @@ export const createUser = async userInfo => {
     phone_number,
   });
 };
+
+export const login = async (id, password) => {
+  const user = await userRepository.getUserById(id);
+  const isCorrect = await bcrypt.compare(password, user.password);
+  if (!user || !isCorrect) {
+    throw new BadRequestException('아이디와 패스워드를 확인해주세요.');
+  }
+
+  const token = jwt.sign(
+    { id: user.id, role: user.role },
+    process.env.SECRET_KEY
+  );
+
+  return token;
+};
