@@ -77,6 +77,10 @@ async function deletePost(id, userId) {
   await boardRepository.deletePost(id);
 }
 
+async function getFreePosts() {
+  return await boardRepository.getFreePosts();
+}
+
 export default {
   createPost,
   getFreePost,
@@ -84,4 +88,5 @@ export default {
   getOperationPost,
   updatePost,
   deletePost,
+  getFreePosts,
 };

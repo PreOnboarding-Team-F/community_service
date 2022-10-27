@@ -43,4 +43,5 @@ router.get('/free/:id', boardController.getFreePost);
 router.get('/notice/:id', boardController.getNoticePost);
 router.patch('/post/:id', isLogin, boardController.updatePost);
 router.delete('/post/:id', isLogin, boardController.deletePost);
+router.get('/free', boardController.getFreePosts);
 export default router;

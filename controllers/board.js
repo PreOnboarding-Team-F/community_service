@@ -52,6 +52,12 @@ async function deletePost(req, res) {
   res.status(200).send({ message: 'DELETE SUCCESS' });
 }
 
+async function getFreePosts(req, res) {
+  const posts = await boardService.getFreePosts();
+
+  res.status(200).send({ data: posts });
+}
+
 export default {
   createPost,
   getFreePost,
@@ -59,4 +65,5 @@ export default {
   getOperationPost,
   updatePost,
   deletePost,
+  getFreePosts,
 };

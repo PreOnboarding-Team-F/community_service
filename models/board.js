@@ -21,12 +21,7 @@ async function findById(id) {
     where: {
       id: parseInt(id),
     },
-    select: {
-      id: true,
-      title: true,
-      content: true,
-      board_type: true,
-      image_url: true,
+    include: {
       user: {
         select: {
           id: true,
@@ -56,9 +51,28 @@ async function deletePost(id) {
   });
 }
 
+async function getFreePosts() {
+  return await prismaClient.board.findMany({
+    where: {
+      board_type: BoardType.FREE,
+    },
+    include: {
+      user: {
+        select: {
+          id: true,
+          user_id: true,
+          nickname: true,
+          role: true,
+        },
+      },
+    },
+  });
+}
+
 export default {
   createPost,
   updatePost,
   findById,
   deletePost,
+  getFreePosts,
 };
