@@ -1,7 +1,11 @@
 import prismaClient from './prismaClient.js';
 import dayjs from 'dayjs';
-export const getUserById = async id => {
+export const getUserByUserId = async id => {
   return await prismaClient.user.findUnique({ where: { user_id: id } });
+};
+
+export const getUserById = async id => {
+  return await prismaClient.user.findUnique({ where: { id } });
 };
 
 export const getUserByNickname = async nickname => {
@@ -22,7 +26,6 @@ export const createUser = async ({
   birth,
   phone_number,
 }) => {
-  // const newBirth = new Date(birth).toISOString().slice(0, 19).replace('T', ' ');
   const newBirth = dayjs(birth).toDate();
   return await prismaClient.user.create({
     data: {
@@ -32,6 +35,19 @@ export const createUser = async ({
       nickname,
       birth: newBirth,
       phone_number,
+    },
+  });
+};
+
+export const deleteUser = async id => {
+  const deletedAt = dayjs(new Date()).toDate();
+  return await prismaClient.user.update({
+    where: { id },
+    data: {
+      user_id: 'null',
+      phone_number: 'null',
+      birth: 'null',
+      deleted_at: deletedAt,
     },
   });
 };

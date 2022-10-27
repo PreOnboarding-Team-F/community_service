@@ -2,6 +2,7 @@ import express from 'express';
 import { body } from 'express-validator';
 import * as userController from '../controllers/user.js';
 import { validate } from '../middleware/validator.js';
+import { isLogin } from '../middleware/auth.js';
 const router = express.Router();
 const validateCredeital = [
   body('id')
@@ -40,5 +41,7 @@ const validateCredeital = [
 router.post('/register', validateCredeital, userController.createUser);
 // 로그인
 router.post('/login', userController.login);
+// 회원 탈퇴
+router.patch('/withdraw', isLogin, userController.deleteUser);
 
 export default router;

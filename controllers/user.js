@@ -10,3 +10,9 @@ export const login = async (req, res) => {
   const result = await userService.login(id, password);
   res.status(200).json({ result });
 };
+
+export const deleteUser = async (req, res) => {
+  const id = req.userId;
+  await userService.deleteUser(id);
+  res.status(200).json({ message: 'DELETE SUCCESS' });
+};

@@ -5,7 +5,7 @@ import { BadRequestException } from '../util/badRequest.exception.js';
 
 export const createUser = async userInfo => {
   const { id, password, gender, nickname, birth, phone_number } = userInfo;
-  const isExistId = await userRepository.getUserById(id);
+  const isExistId = await userRepository.getUserByUserId(id);
   const isExistNickname = await userRepository.getUserByNickname(nickname);
   const isExistPhoneNumber = await userRepository.getUserByPhoneNumber(
     phone_number
@@ -34,16 +34,27 @@ export const createUser = async userInfo => {
 };
 
 export const login = async (id, password) => {
-  const user = await userRepository.getUserById(id);
-  const isCorrect = await bcrypt.compare(password, user.password);
-  if (!user || !isCorrect) {
+  const user = await userRepository.getUserByUserId(id);
+  if (!user) {
     throw new BadRequestException('아이디와 패스워드를 확인해주세요.');
   }
 
+  const isCorrect = await bcrypt.compare(password, user.password);
+  if (!isCorrect) {
+    throw new BadRequestException('아이디와 패스워드를 확인해주세요.');
+  }
   const token = jwt.sign(
     { id: user.id, role: user.role },
     process.env.SECRET_KEY
   );
 
   return token;
+};
+
+export const deleteUser = async id => {
+  const user = await userRepository.getUserById(id);
+  if (!user) {
+    throw new BadRequestException('잘못된 접근입니다.');
+  }
+  return await userRepository.deleteUser(id);
 };
