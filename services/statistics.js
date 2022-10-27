@@ -28,10 +28,10 @@ export const readAllUserGender = async () => {
     
     for (const iterator of userGender) {
         if (iterator.gender === "male"){
-            userMale =iterator._count.gender
+            userMale =iterator._count.gender;
         }
         else if (iterator.gender === "female"){
-            userFemale = iterator._count.gender
+            userFemale = iterator._count.gender;
         }
         else{
             console.log(iterator.gender);

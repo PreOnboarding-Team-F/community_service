@@ -14,8 +14,7 @@ export const readAllUserGenderByBoard = async () => {
     const data = prismaClient.$queryRaw`
     SELECT COUNT(*) AS genderCount, user.gender
     FROM board JOIN user ON board.user_id = user.id
-    GROUP BY  user.gender
-  `;
+    GROUP BY  user.gender`;
 
   return data;
 };
