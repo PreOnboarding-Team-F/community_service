@@ -9,19 +9,19 @@ async function createPost(req, res) {
   res.status(201).send({ message: 'success' });
 }
 async function getFreePost(req, res) {
-  const id = parseInt(req.param('id')); //머지 후 validate 에서 integer로 변환
+  const id = req.params.id;
   const post = await boardService.getFreePost(id);
   res.status(200).send({ data: post });
 }
 
 async function getNoticePost(req, res) {
-  const id = parseInt(req.param('id'));
+  const id = req.params.id;
   const post = await boardService.getNoticePost(id);
   res.status(200).send({ data: post });
 }
 
 async function getOperationPost(req, res) {
-  const id = parseInt(req.param('id'));
+  const id = req.params.id;
   const post = await boardService.getOperationPost(id);
   res.status(200).send({ data: post });
 }

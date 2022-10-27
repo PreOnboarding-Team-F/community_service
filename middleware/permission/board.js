@@ -20,3 +20,11 @@ export const checkCreatePermissions = (req, res, next) => {
   }
   next();
 };
+
+export const checkGetOperationPermission = (req, res, next) => {
+  const userRole = req.token.userRole;
+  if (userRole !== 'admin') {
+    //throw new UnauthorizedException('잘못된 접근 권한 입니다.');
+  }
+  next();
+};

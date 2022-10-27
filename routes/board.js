@@ -1,8 +1,13 @@
+import {
+  checkCreatePermissions,
+  checkGetOperationPermission,
+} from '../middleware/permission/board.js';
+
 import boardController from '../controllers/board.js';
 import { body } from 'express-validator';
-import { checkCreatePermissions } from '../middleware/permission/board.js';
 import express from 'express';
 import { validate } from '../middleware/validate.js';
+
 const router = express.Router();
 
 const validateCreatePost = [
@@ -24,7 +29,12 @@ router.post(
   checkCreatePermissions,
   boardController.createPost
 );
+router.get(
+  '/operation/:id',
+  checkGetOperationPermission,
+  boardController.getOperationPost
+);
 router.get('/free/:id', boardController.getFreePost);
 router.get('/notice/:id', boardController.getNoticePost);
-router.get('/operation/:id', boardController.getOperationPost);
+
 export default router;
