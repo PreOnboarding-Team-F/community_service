@@ -1,10 +1,10 @@
 import boardService from '../services/board.js';
 
 async function createPost(req, res) {
-  const boardType = req.query.type;
-  const { title, content } = req.body;
-  const { userId, userRole } = req.token;
-
+  const { boardType, title, content } = req.body;
+  //const { userId, userRole } = req.token;
+  const userId = 1;
+  const userRole = 'admin';
   if (!boardType || !title || !content) {
     //throw new BadRequestException('유효하지 않은 데이터 입니다.');
   }
