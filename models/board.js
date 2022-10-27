@@ -1,5 +1,5 @@
 import prismaClient from './prismaClient.js';
-const BoardType = {
+export const BoardType = {
   NOTICE: 'notice',
   FREE: 'free',
   OPERATION: 'operation',
@@ -39,7 +39,6 @@ async function getPost(id) {
 }
 
 export default {
-  BoardType,
   createPost,
   getPost,
 };
