@@ -41,7 +41,6 @@ model user {
   id           Int         @id @default(autoincrement())
   user_id      String      @unique(map: "user_id") @db.VarChar(20)
   nickname     String      @unique(map: "nickname") @db.VarChar(20)
-  gender       String      @db.VarChar(5)
   phone_number String      @unique(map: "phone_number") @db.VarChar(50)
   created_at   DateTime?   @default(now()) @db.DateTime(0)
   deleted_at   DateTime?   @db.DateTime(0)
@@ -49,10 +48,12 @@ model user {
   role         String      @default("USER") @db.VarChar(10)
   birth        DateTime    @db.Date
   password     String      @db.VarChar(100)
+  gender       String      @db.VarChar(10)
   board        board[]
   comment      comment[]
   visit_log    visit_log[]
 }
+
 model visit_log {
   id         Int      @id @default(autoincrement())
   user_id    Int
