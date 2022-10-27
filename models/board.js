@@ -16,15 +16,6 @@ async function createPost(title, content, boardType, userId) {
   });
 }
 
-async function updatePost(id, updateData) {
-  await prismaClient.board.update({
-    where: {
-      id: parseInt(id),
-    },
-    data: updateData,
-  });
-}
-
 async function findById(id) {
   return await prismaClient.board.findUnique({
     where: {
@@ -48,8 +39,26 @@ async function findById(id) {
   });
 }
 
+async function updatePost(id, updateData) {
+  await prismaClient.board.update({
+    where: {
+      id: parseInt(id),
+    },
+    data: updateData,
+  });
+}
+
+async function deletePost(id) {
+  await prismaClient.board.delete({
+    where: {
+      id: parseInt(id),
+    },
+  });
+}
+
 export default {
   createPost,
   updatePost,
   findById,
+  deletePost,
 };

@@ -2,21 +2,11 @@ import boardService from '../services/board.js';
 
 async function createPost(req, res) {
   const userId = req.userId;
-  const { title, content } = req.body;
+  const { boardType, title, content } = req.body;
 
-  await boardService.createPost(title, content, userId);
+  await boardService.createPost(title, content, boardType, userId);
 
   res.status(201).send({ message: 'CREATE SUCCESS' });
-}
-
-async function updatePost(req, res) {
-  const id = req.params.id;
-  const userId = req.userId;
-  const updateData = req.body;
-
-  await boardService.updatePost(id, updateData, userId);
-
-  res.status(200).send({ message: 'UPDATE SUCCESS' });
 }
 
 async function getFreePost(req, res) {
@@ -43,10 +33,30 @@ async function getOperationPost(req, res) {
   res.status(200).send({ data: post });
 }
 
+async function updatePost(req, res) {
+  const id = req.params.id;
+  const userId = req.userId;
+  const updateData = req.body;
+
+  await boardService.updatePost(id, updateData, userId);
+
+  res.status(200).send({ message: 'UPDATE SUCCESS' });
+}
+
+async function deletePost(req, res) {
+  const id = req.params.id;
+  const userId = req.userId;
+
+  await boardService.deletePost(id, userId);
+
+  res.status(200).send({ message: 'DELETE SUCCESS' });
+}
+
 export default {
   createPost,
   getFreePost,
   getNoticePost,
   getOperationPost,
   updatePost,
+  deletePost,
 };

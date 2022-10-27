@@ -33,7 +33,6 @@ router.post(
   checkCreatePermissions,
   boardController.createPost
 );
-router.patch('/post/:id', isLogin, boardController.updatePost);
 router.get(
   '/operation/:id',
   isLogin,
@@ -42,5 +41,6 @@ router.get(
 );
 router.get('/free/:id', boardController.getFreePost);
 router.get('/notice/:id', boardController.getNoticePost);
-
+router.patch('/post/:id', isLogin, boardController.updatePost);
+router.delete('/post/:id', isLogin, boardController.deletePost);
 export default router;
