@@ -24,7 +24,7 @@ export const checkCreatePermissions = (req, res, next) => {
 
 export const checkGetOperationPermission = (req, res, next) => {
   const userRole = req.role;
-  if (userRole !== 'USER') {
+  if (userRole !== 'ADMIN') {
     throw new ForbiddenException('접근 권한이 없습니다.');
   }
   next();

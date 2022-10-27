@@ -71,6 +71,15 @@ async function getNoticePosts() {
   });
 }
 
+async function getOperationPosts() {
+  return await prismaClient.board.findMany({
+    where: {
+      board_type: BoardType.OPERATION,
+    },
+    include: includeUser,
+  });
+}
+
 export default {
   createPost,
   updatePost,
@@ -78,4 +87,5 @@ export default {
   deletePost,
   getFreePosts,
   getNoticePosts,
+  getOperationPosts,
 };

@@ -85,6 +85,10 @@ async function getNoticePosts() {
   return await boardRepository.getNoticePosts();
 }
 
+async function getOperationPosts() {
+  return await boardRepository.getOperationPosts();
+}
+
 export default {
   createPost,
   getFreePost,
@@ -94,4 +98,5 @@ export default {
   deletePost,
   getFreePosts,
   getNoticePosts,
+  getOperationPosts,
 };

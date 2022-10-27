@@ -45,4 +45,10 @@ router.patch('/post/:id', isLogin, boardController.updatePost);
 router.delete('/post/:id', isLogin, boardController.deletePost);
 router.get('/free', boardController.getFreePosts);
 router.get('/notice', boardController.getNoticePosts);
+router.get(
+  '/operation',
+  isLogin,
+  checkGetOperationPermission,
+  boardController.getOperationPosts
+);
 export default router;
