@@ -1,3 +1,4 @@
+import { BadRequestException } from '../util/exception/index.js';
 import { validationResult } from 'express-validator';
 
 export const validate = (req, res, next) => {
@@ -5,5 +6,5 @@ export const validate = (req, res, next) => {
   if (errors.isEmpty()) {
     return next();
   }
-  res.status(400).send({ message: errors.array()[0].msg });
+  throw new BadRequestException(errors.array()[0].msg);
 };

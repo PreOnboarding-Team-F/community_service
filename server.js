@@ -27,6 +27,13 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
+  if (err.status) {
+    return res.status(err.status).send({ message: err.message });
+  }
+  next(err);
+});
+
+app.use((err, req, res, next) => {
   console.error(err);
   res.status(500).send({ message: '서버 에러' });
 });
