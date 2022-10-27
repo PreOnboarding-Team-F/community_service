@@ -10,63 +10,21 @@ export const createComment = async (userId, boardId, content) => {
   });
 };
 
-export const getCommentList = async boardId => {
-  return await prismaClient.comment.findMany({
-    where: {
-      AND: [
-        {
-          board_id: boardId,
-        },
-        {
-          parent_id: 0,
-        },
-      ],
-    },
-    select: {
-      board_id: true,
-      content: true,
-      user: {
-        select: {
-          nickname: true,
-        },
-      },
-    },
-  });
-};
-
-// export const getUserById = async (boardId, commentId) => {
-//   return await prismaClient.comment.findUnique({
-//     where: {
-//       AND: [
-//         {
-//           id: commentId,
-//         },
-//         {
-//           board_id: boardId,
-//         },
-//       ],
-//     },
-//     select: {
-//       user_id: true,
-//     },
-//   });
-// };
-
-export const updateComment = async (commentId, content) => {
-  return await prismaClient.comment.update({
-    where: {
-      id: commentId,
-    },
+export const createNestComment = async (userId, boardId, content, parentId) => {
+  return await prismaClient.comment.create({
     data: {
-      content: content,
+      user_id: userId,
+      board_id: boardId,
+      content,
+      parent_id: parentId,
     },
   });
 };
 
-export const deleteComment = async (userId, boardId, commentId) => {
-  return await prismaClient.comment.delete({
+export const getPostById = async boardId => {
+  return await prismaClient.board.findUnique({
     where: {
-      id: commentId,
+      id: boardId,
     },
   });
 };
