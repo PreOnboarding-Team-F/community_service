@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import * as userRepository from '../models/user.js';
 import * as visitLogRepository from '../models/visitLog.js';
-import { BadRequestException } from '../util/badRequest.exception.js';
+import { BadRequestException } from '../util/exception/index.js';
 
 export const createUser = async userInfo => {
   const { id, password, gender, nickname, birth, phone_number } = userInfo;
