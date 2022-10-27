@@ -5,6 +5,17 @@ export const BoardType = {
   OPERATION: 'operation',
 };
 
+const includeUser = {
+  user: {
+    select: {
+      id: true,
+      user_id: true,
+      nickname: true,
+      role: true,
+    },
+  },
+};
+
 async function createPost(title, content, boardType, userId) {
   await prismaClient.board.create({
     data: {
@@ -21,16 +32,7 @@ async function findById(id) {
     where: {
       id: parseInt(id),
     },
-    include: {
-      user: {
-        select: {
-          id: true,
-          user_id: true,
-          nickname: true,
-          role: true,
-        },
-      },
-    },
+    include: includeUser,
   });
 }
 
@@ -56,16 +58,16 @@ async function getFreePosts() {
     where: {
       board_type: BoardType.FREE,
     },
-    include: {
-      user: {
-        select: {
-          id: true,
-          user_id: true,
-          nickname: true,
-          role: true,
-        },
-      },
+    include: includeUser,
+  });
+}
+
+async function getNoticePosts() {
+  return await prismaClient.board.findMany({
+    where: {
+      board_type: BoardType.NOTICE,
     },
+    include: includeUser,
   });
 }
 
@@ -75,4 +77,5 @@ export default {
   findById,
   deletePost,
   getFreePosts,
+  getNoticePosts,
 };

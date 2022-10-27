@@ -58,6 +58,12 @@ async function getFreePosts(req, res) {
   res.status(200).send({ data: posts });
 }
 
+async function getNoticePosts(req, res) {
+  const posts = await boardService.getNoticePosts();
+
+  res.status(200).send({ data: posts });
+}
+
 export default {
   createPost,
   getFreePost,
@@ -66,4 +72,5 @@ export default {
   updatePost,
   deletePost,
   getFreePosts,
+  getNoticePosts,
 };
