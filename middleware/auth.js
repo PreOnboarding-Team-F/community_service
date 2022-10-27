@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import * as userRepository from '../models/user.js';
-import { BadRequestException } from '../util/badRequest.exception.js';
+import { BadRequestException } from '../util/exception/index.js';
 
 const AUTH_ERROR_MESSAGE = 'Authentication Error';
 export const isLogin = (req, res, next) => {
