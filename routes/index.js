@@ -1,7 +1,8 @@
 import express from 'express';
-import * as statisticsController from '../controllers/statistics.js'
+import statisticsRouter from './statistics.js';
+
 const router = express.Router();
 
-router.get("/statistics/gender",statisticsController.getGender);
+router.use("/statistics",statisticsRouter)
 
 export default router;
