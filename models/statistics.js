@@ -11,7 +11,7 @@ export const readAllUserGender = async () => {
 };
 
 export const readAllUserGenderByBoard = async () => {
-    const data = await prismaClient.$queryRaw`
+    const data = prismaClient.$queryRaw`
     SELECT COUNT(*) AS genderCount, user.gender
     FROM board JOIN user ON board.user_id = user.id
     GROUP BY  user.gender
@@ -20,4 +20,16 @@ export const readAllUserGenderByBoard = async () => {
   return data;
 };
 
+export const readAllUserAge = async () => {
+    const data = prismaClient.$queryRaw`
+    SELECT YEAR(NOW())-LEFT(user.birth,4) +1 AS age
+    FROM user`;
+    return data;
+};
 
+export const readAllUserAgeByBoard = async () => {
+    const data = prismaClient.$queryRaw`
+    SELECT YEAR(NOW())-LEFT(user.birth,4) +1 AS age
+    FROM board JOIN user ON board.user_id = user.id`;
+  return data;
+};

@@ -50,14 +50,54 @@ export const readAllUserGender = async () => {
         }
     }
 
-    result.boardWriterRatio.male = Math.ceil((boardWriterMale / (boardWriterMale+boardWriterFemale))*100);
-    result.boardWriterRatio.female = 100 - result.boardWriterRatio.male;
+    result.boardWriterRatio.male = makeRatio(boardWriterMale,boardWriterMale+boardWriterFemale);
+    result.boardWriterRatio.female = makeRatio(boardWriterFemale,boardWriterMale+boardWriterFemale);
     result.genderCount.female = userFemale;
     result.genderCount.male = userMale;
     result.genderCount.total = userFemale+userMale;
-    result.genderRatio.female = Math.ceil((userFemale/result.genderCount.total)*100);
-    result.genderRatio.male = 100 - result.genderRatio.female;
+    result.genderRatio.female = makeRatio(userFemale,result.genderCount.total);
+    result.genderRatio.male =makeRatio(userMale,result.genderCount.total);
 
     return result;
 
 };
+
+
+export const readAllUserAge = async () => {
+    let result = {};
+    
+    const promise1 = await statisticsRepository.readAllUserAge();
+    const promise2 = statisticsRepository.readAllUserAgeByBoard();
+    const [userAge,userAgeByBoard] =  await Promise.all([promise1,promise2]);
+    const userAgeRatioList = new Array(10).fill(0); 
+    const userAgeByBoardRatioList = new Array(10).fill(0); 
+    const userAgeByBoardCountList = new Array(10).fill(0); 
+    const userAgeCountList = new Array(10).fill(0); 
+    const userAgeByBoardTotal = userAgeByBoard.length;
+    const userAgeTotal = userAge.length;
+
+    for (const iterator of userAgeByBoard) {
+        userAgeByBoardCountList[Math.floor(iterator.age/10)] += 1;
+    }
+    for (let idx = 0; idx < userAgeByBoardRatioList.length; idx++) {
+        userAgeByBoardRatioList[idx] = makeRatio(userAgeByBoardCountList[idx],userAgeByBoardTotal);
+    }
+    for(const iterator of userAge){
+        userAgeCountList[Math.floor(iterator.age/10)] += 1;
+    }
+    for (let idx=0; idx < userAgeRatioList.length; idx++) {
+        userAgeRatioList[idx] = makeRatio(userAgeCountList[idx],userAgeTotal);
+    }
+
+    result.boardWriterRatio = userAgeByBoardRatioList;
+    result.userCount = userAgeCountList;
+    result.userRatio =userAgeRatioList;
+
+    return result;
+
+};
+
+function makeRatio( num, total ){
+    const swap = Math.round((num/total)*10000);
+    return swap/100;
+}
