@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import * as userRepository from '../models/user.js';
+import * as visitLogRepository from '../models/visitLog.js';
 import { BadRequestException } from '../util/badRequest.exception.js';
 
 export const createUser = async userInfo => {
@@ -47,6 +48,9 @@ export const login = async (id, password) => {
     { id: user.id, role: user.role },
     process.env.SECRET_KEY
   );
+
+  // 방문 로그는 로그인 할 때마다 생성되도록 구현
+  await visitLogRepository.createVisitLog(user.id);
 
   return token;
 };
