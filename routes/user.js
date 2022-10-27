@@ -1,7 +1,7 @@
 import express from 'express';
 import { body } from 'express-validator';
 import * as userController from '../controllers/user.js';
-import { validate } from '../middleware/validator.js';
+import { validate } from '../middleware/validate.js';
 import { isLogin } from '../middleware/auth.js';
 const router = express.Router();
 const validateCredeital = [
