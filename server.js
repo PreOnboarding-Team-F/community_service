@@ -1,9 +1,12 @@
-import express from 'express';
+import 'express-async-errors';
+
 import cors from 'cors';
-import morgan from 'morgan';
 import dotenv from 'dotenv';
+import express from 'express';
 import http from 'http';
+import morgan from 'morgan';
 import routes from './routes/index.js';
+
 dotenv.config();
 
 const corsOption = {
@@ -18,7 +21,22 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(routes);
 
-// Error Middleware
+// 임시 Error Middleware
+app.use((req, res, next) => {
+  res.sendStatus(404);
+});
+
+app.use((err, req, res, next) => {
+  if (err.status) {
+    return res.status(err.status).send({ message: err.message });
+  }
+  next(err);
+});
+
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).send({ message: '서버 에러' });
+});
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
