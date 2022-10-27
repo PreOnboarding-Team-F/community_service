@@ -52,10 +52,12 @@ export const readAllUserGender = async () => {
     boardWriterMale,
     boardWriterMale + boardWriterFemale
   );
+
   result.boardWriterRatio.female = makeRatio(
     boardWriterFemale,
     boardWriterMale + boardWriterFemale
   );
+
   result.genderCount.female = userFemale;
   result.genderCount.male = userMale;
   result.genderCount.total = userFemale + userMale;
@@ -68,7 +70,7 @@ export const readAllUserGender = async () => {
 export const readAllUserAge = async () => {
   let result = {};
 
-  const promise1 = await statisticsRepository.readAllUserAge();
+  const promise1 = statisticsRepository.readAllUserAge();
   const promise2 = statisticsRepository.readAllUserAgeByBoard();
   const [userAge, userAgeByBoard] = await Promise.all([promise1, promise2]);
 
@@ -76,8 +78,6 @@ export const readAllUserAge = async () => {
   const userAgeByBoardRatioList = new Array(10).fill(0);
   const userAgeByBoardCountList = new Array(10).fill(0);
   const userAgeCountList = new Array(10).fill(0);
-  const userAgeByBoardTotal = userAgeByBoard.length;
-  const userAgeTotal = userAge.length;
 
   for (const iterator of userAgeByBoard) {
     userAgeByBoardCountList[Math.floor(iterator.age / 10)] += 1;
@@ -85,20 +85,66 @@ export const readAllUserAge = async () => {
   for (let idx = 0; idx < userAgeByBoardRatioList.length; idx++) {
     userAgeByBoardRatioList[idx] = makeRatio(
       userAgeByBoardCountList[idx],
-      userAgeByBoardTotal
+      userAgeByBoard.length
     );
   }
   for (const iterator of userAge) {
     userAgeCountList[Math.floor(iterator.age / 10)] += 1;
   }
   for (let idx = 0; idx < userAgeRatioList.length; idx++) {
-    userAgeRatioList[idx] = makeRatio(userAgeCountList[idx], userAgeTotal);
+    userAgeRatioList[idx] = makeRatio(userAgeCountList[idx], userAge.length);
   }
 
   result.boardWriterRatio = userAgeByBoardRatioList;
   result.userCount = userAgeCountList;
   result.userRatio = userAgeRatioList;
 
+  return result;
+};
+
+export const getAccesstime = async () => {
+  let result = {};
+
+  const data = await statisticsRepository.readAllUserByAccessTime();
+
+  const totalCount = new Array(24).fill(0);
+  const ageRatio = Array.from(Array(24), () => Array(10).fill(0));
+  const ageCount = Array.from(Array(24), () => Array(10).fill(0));
+  const genderRatio = new Array(24);
+  const genderCount = new Array(24);
+
+  for (let idx = 0; idx < genderRatio.length; idx++) {
+    genderRatio[idx] = { male: 0, female: 0 };
+    genderCount[idx] = { male: 0, female: 0 };
+  }
+
+  for (const iterator of data) {
+    let visitTime = Number(iterator.visited);
+    let age = iterator.age;
+    let gender = iterator.gender;
+    totalCount[visitTime] += 1;
+    ageCount[visitTime][Math.floor(age / 10)] += 1;
+    if (gender === 'male') {
+      genderCount[visitTime].male += 1;
+    } else {
+      genderCount[visitTime].female += 1;
+    }
+  }
+
+  genderCount.forEach((e, index) => {
+    genderRatio[index].male = makeRatio(e.male, data.length);
+    genderRatio[index].female = makeRatio(e.female, data.length);
+  });
+
+  ageCount.forEach((timeList, timeIndex) => {
+    timeList.forEach((age, ageIndex) => {
+      ageRatio[timeIndex][ageIndex] = makeRatio(age, data.length);
+    });
+  });
+
+  result.totalCount = totalCount;
+  result.ageRatio = ageRatio;
+  result.genderRatio = genderRatio;
   return result;
 };
 
