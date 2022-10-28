@@ -48,7 +48,6 @@ export const readAllUserGender = async () => {
     boardWriterMale,
     boardWriterMale + boardWriterFemale
   );
-
   result.boardWriterRatio.female = makeRatio(
     boardWriterFemale,
     boardWriterMale + boardWriterFemale
