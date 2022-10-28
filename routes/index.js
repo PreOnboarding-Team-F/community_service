@@ -7,7 +7,7 @@ import userRouter from './user.js';
 const router = express.Router();
 
 router.use('/user', userRouter);
-router.use(commentRouter);
+router.use('/comment', commentRouter);
 router.use('/statistics', statisticsRouter);
 router.use('/board', boardRouter);
 
