@@ -1,6 +1,6 @@
 import * as statisticsRepository from '../models/statistics.js';
 
-export const readAllUserGender = async () => {
+export const getGender = async () => {
   let result = {
     boardWriterRatio: {
       female: 0,
@@ -63,7 +63,7 @@ export const readAllUserGender = async () => {
   return result;
 };
 
-export const readAllUserAge = async () => {
+export const getAge = async () => {
   let result = {};
 
   const promise1 = statisticsRepository.readAllUserAge();

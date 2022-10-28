@@ -1,13 +1,13 @@
 import * as statisticsService from '../services/statistics.js';
 
 export const getGender = async function (req, res) {
-  const data = await statisticsService.readAllUserGender();
+  const data = await statisticsService.getGender();
 
   res.status(200).json({ data });
 };
 
 export const getAge = async function (req, res) {
-  const data = await statisticsService.readAllUserAge();
+  const data = await statisticsService.getAge();
 
   res.status(200).json({ data });
 };
