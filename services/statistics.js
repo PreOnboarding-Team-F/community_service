@@ -1,5 +1,8 @@
 import * as statisticsRepository from '../models/statistics.js';
 
+/**
+ * 게시판 작성 유저의 성비, 전체유저의 성별 수 및 비율 반환
+ */
 export const getGender = async () => {
   let result = {
     boardWriterRatio: {
@@ -63,6 +66,9 @@ export const getGender = async () => {
   return result;
 };
 
+/**
+ * 게시판 작성 유저의 나이대비율, 전체유저의 나이대 수 및 비율 반환
+ */
 export const getAge = async () => {
   let result = {};
 
@@ -98,6 +104,9 @@ export const getAge = async () => {
   return result;
 };
 
+/**
+ * 방문기록 시간대별 전체 유저의 수, 비율, 성비 반환
+ */
 export const getAccesstime = async () => {
   let result = {};
 
@@ -144,6 +153,9 @@ export const getAccesstime = async () => {
   return result;
 };
 
+/**
+ * 방문한 전체 유저의 나이, 성별, 수 반환
+ */
 export const getVisit = async () => {
   let result = {};
 
