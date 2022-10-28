@@ -8,7 +8,7 @@ import boardService from '../../services/board.js';
 
 jest.mock('../../models/board.js');
 
-describe('Board Controller createPost', () => {
+describe('Board Service createPost', () => {
   it('boardRepository.createPost 실행 확인', () => {
     const title = '';
     const content = '';
@@ -21,7 +21,7 @@ describe('Board Controller createPost', () => {
   });
 });
 
-describe('Board Controller getFreePost', () => {
+describe('Board Service getFreePost', () => {
   let id;
 
   beforeEach(() => {
@@ -39,7 +39,7 @@ describe('Board Controller getFreePost', () => {
   it('board type이 free가 아닌 경우', () => {
     boardRepository.findById = jest.fn(id => {
       return {
-        board_type: '',
+        boardType: '',
       };
     });
 
@@ -49,14 +49,14 @@ describe('Board Controller getFreePost', () => {
   });
 
   it('return post', async () => {
-    const result = { board_type: 'free' };
+    const result = { boardType: 'free' };
     boardRepository.findById = jest.fn(id => result);
     const post = await boardService.getFreePost(id);
     expect(post).toEqual(result);
   });
 });
 
-describe('Board Controller getNoticePost', () => {
+describe('Board Service getNoticePost', () => {
   let id;
 
   beforeEach(() => {
@@ -74,7 +74,7 @@ describe('Board Controller getNoticePost', () => {
   it('board type이 notice가 아닌 경우', () => {
     boardRepository.findById = jest.fn(id => {
       return {
-        board_type: '',
+        boardType: '',
       };
     });
 
@@ -84,14 +84,14 @@ describe('Board Controller getNoticePost', () => {
   });
 
   it('return post', async () => {
-    const result = { board_type: 'notice' };
+    const result = { boardType: 'notice' };
     boardRepository.findById = jest.fn(id => result);
     const post = await boardService.getNoticePost(id);
     expect(post).toEqual(result);
   });
 });
 
-describe('Board Controller getOperationPost', () => {
+describe('Board Service getOperationPost', () => {
   let id;
 
   beforeEach(() => {
@@ -109,7 +109,7 @@ describe('Board Controller getOperationPost', () => {
   it('board type이 operation이 아닌 경우', () => {
     boardRepository.findById = jest.fn(id => {
       return {
-        board_type: '',
+        boardType: '',
       };
     });
 
@@ -119,14 +119,14 @@ describe('Board Controller getOperationPost', () => {
   });
 
   it('return post', async () => {
-    const result = { board_type: 'operation' };
+    const result = { boardType: 'operation' };
     boardRepository.findById = jest.fn(id => result);
     const post = await boardService.getOperationPost(id);
     expect(post).toEqual(result);
   });
 });
 
-describe('Board Controller updatePost', () => {
+describe('Board Service updatePost', () => {
   let id, updateData, userId;
 
   beforeEach(() => {
@@ -168,7 +168,7 @@ describe('Board Controller updatePost', () => {
   });
 });
 
-describe('Board Controller deletePost', () => {
+describe('Board Service deletePost', () => {
   let id, userId;
 
   beforeEach(() => {

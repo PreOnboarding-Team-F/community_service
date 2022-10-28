@@ -6,11 +6,11 @@ import {
 import { BoardType } from '../models/board.js';
 import boardRepository from '../models/board.js';
 
-async function createPost(title, content, boardType, userId) {
+const createPost = async (title, content, boardType, userId) => {
   await boardRepository.createPost(title, content, boardType, userId);
-}
+};
 
-async function getFreePost(id) {
+const getFreePost = async id => {
   const post = await boardRepository.findById(id);
 
   if (!post) {
@@ -21,9 +21,9 @@ async function getFreePost(id) {
     throw new NotFoundException('잘못된 요청입니다.');
   }
   return post;
-}
+};
 
-async function getNoticePost(id) {
+const getNoticePost = async id => {
   const post = await boardRepository.findById(id);
 
   if (!post) {
@@ -34,9 +34,9 @@ async function getNoticePost(id) {
     throw new NotFoundException('잘못된 요청입니다.');
   }
   return post;
-}
+};
 
-async function getOperationPost(id) {
+const getOperationPost = async id => {
   const post = await boardRepository.findById(id);
 
   if (!post) {
@@ -47,9 +47,9 @@ async function getOperationPost(id) {
     throw new NotFoundException('잘못된 요청입니다.');
   }
   return post;
-}
+};
 
-async function updatePost(id, updateData, userId) {
+const updatePost = async (id, updateData, userId) => {
   const post = await boardRepository.findById(id);
 
   if (!post) {
@@ -61,9 +61,9 @@ async function updatePost(id, updateData, userId) {
   }
 
   await boardRepository.updatePost(id, updateData, userId);
-}
+};
 
-async function deletePost(id, userId) {
+const deletePost = async (id, userId) => {
   const post = await boardRepository.findById(id);
 
   if (!post) {
@@ -75,19 +75,19 @@ async function deletePost(id, userId) {
   }
 
   await boardRepository.deletePost(id);
-}
+};
 
-async function getFreePosts() {
+const getFreePosts = async () => {
   return await boardRepository.getFreePosts();
-}
+};
 
-async function getNoticePosts() {
+const getNoticePosts = async () => {
   return await boardRepository.getNoticePosts();
-}
+};
 
-async function getOperationPosts() {
+const getOperationPosts = async () => {
   return await boardRepository.getOperationPosts();
-}
+};
 
 export default {
   createPost,

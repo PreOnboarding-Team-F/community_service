@@ -1,74 +1,74 @@
 import boardService from '../services/board.js';
 
-async function createPost(req, res) {
+const createPost = async (req, res) => {
   const userId = req.userId;
   const { boardType, title, content } = req.body;
 
   await boardService.createPost(title, content, boardType, userId);
 
-  res.status(201).send({ message: 'CREATE SUCCESS' });
-}
+  res.status(201).json({ message: 'CREATE SUCCESS' });
+};
 
-async function getFreePost(req, res) {
+const getFreePost = async (req, res) => {
   const id = req.params.id;
 
   const post = await boardService.getFreePost(id);
 
-  res.status(200).send({ data: post });
-}
+  res.status(200).json({ data: post });
+};
 
-async function getNoticePost(req, res) {
+const getNoticePost = async (req, res) => {
   const id = req.params.id;
 
   const post = await boardService.getNoticePost(id);
 
-  res.status(200).send({ data: post });
-}
+  res.status(200).json({ data: post });
+};
 
-async function getOperationPost(req, res) {
+const getOperationPost = async (req, res) => {
   const id = req.params.id;
 
   const post = await boardService.getOperationPost(id);
 
-  res.status(200).send({ data: post });
-}
+  res.status(200).json({ data: post });
+};
 
-async function updatePost(req, res) {
+const updatePost = async (req, res) => {
   const id = req.params.id;
   const userId = req.userId;
   const updateData = req.body;
 
   await boardService.updatePost(id, updateData, userId);
 
-  res.status(200).send({ message: 'UPDATE SUCCESS' });
-}
+  res.status(200).json({ message: 'UPDATE SUCCESS' });
+};
 
-async function deletePost(req, res) {
+const deletePost = async (req, res) => {
   const id = req.params.id;
   const userId = req.userId;
 
   await boardService.deletePost(id, userId);
 
-  res.status(200).send({ message: 'DELETE SUCCESS' });
-}
+  res.status(200).json({ message: 'DELETE SUCCESS' });
+};
 
-async function getFreePosts(req, res) {
+const getFreePosts = async (req, res) => {
   const posts = await boardService.getFreePosts();
 
-  res.status(200).send({ data: posts });
-}
+  res.status(200).json({ data: posts });
+};
 
-async function getNoticePosts(req, res) {
+const getNoticePosts = async (req, res) => {
   const posts = await boardService.getNoticePosts();
 
-  res.status(200).send({ data: posts });
-}
+  res.status(200).json({ data: posts });
+};
 
-async function getOperationPosts(req, res) {
+const getOperationPosts = async (req, res) => {
   const posts = await boardService.getOperationPosts();
 
-  res.status(200).send({ data: posts });
-}
+  res.status(200).json({ data: posts });
+};
 
 export default {
   createPost,
