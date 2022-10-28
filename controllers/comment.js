@@ -3,8 +3,8 @@ import { BadRequestException } from '../util/exception/index.js';
 
 export const createComment = async (req, res) => {
   const { boardId } = req.query;
-  const { userId, content, parentId } = req.body;
-  // const userId = req.userId;
+  const { content, parentId } = req.body;
+  const userId = req.userId;
 
   if (!userId || !boardId || !content) {
     throw new BadRequestException('잘못된 요청입니다.');
@@ -24,7 +24,7 @@ export const getCommentList = async (req, res) => {
   const { commentId } = req.body;
 
   if (!boardId) {
-    throw new BadRequestException('KEY ERROR');
+    throw new BadRequestException('잘못된 요청입니다.');
   }
 
   const result = await commentService.getCommentList(
@@ -40,7 +40,7 @@ export const updateComment = async (req, res) => {
   const userId = req.userId;
 
   if (!boardId || !commentId || !userId) {
-    throw new BadRequestException('KEY ERROR');
+    throw new BadRequestException('잘못된 요청입니다.');
   }
 
   await commentService.updateComment(
@@ -54,12 +54,12 @@ export const updateComment = async (req, res) => {
 
 export const deleteComment = async (req, res) => {
   const { boardId } = req.query;
-  const { userId, commentId, userRole } = req.body;
-  // const userId = req.userId;
-  // const userRole = req.role;
+  const { commentId } = req.body;
+  const userId = req.userId;
+  const userRole = req.role;
 
   if (!userId || !boardId || !commentId) {
-    throw new BadRequestException('KEY ERROR');
+    throw new BadRequestException('잘못된 요청입니다.');
   }
   await commentService.deleteComment(
     userId,
