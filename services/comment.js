@@ -37,3 +37,23 @@ export const getCommentList = async (boardId, commentId) => {
 
   return await commentDao.getCommentList(boardId);
 };
+
+export const updateComment = async (userId, boardId, commentId, content) => {
+  const isExistPost = await commentDao.getPostById(boardId);
+  const isExistComment = await commentDao.getCommentById(commentId);
+  const isMatchUser = await commentDao.getUserByComment(userId, commentId);
+
+  if (!isExistPost) {
+    throw new NotFoundException('게시글이 존재하지 않습니다.');
+  }
+
+  if (!isExistComment) {
+    throw new NotFoundException('댓글이 존재하지 않습니다.');
+  }
+
+  if (Object.values(isMatchUser) === 0n) {
+    throw new UnauthorizedException('권한이 없습니다.');
+  }
+
+  return await commentDao.updateComment(userId, commentId, content);
+};

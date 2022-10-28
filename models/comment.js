@@ -74,3 +74,24 @@ export const getNextCommentList = async (boardId, commentId) => {
     ORDER BY c.created_at DESC
   `;
 };
+
+export const updateComment = async (userId, commentId, content) => {
+  return await prismaClient.$queryRaw`
+    UPDATE
+      comment
+    SET
+      content = ${content}
+    WHERE id = ${commentId} AND user_id = ${userId}
+    `;
+};
+
+export const getUserByComment = async (userId, commentId) => {
+  return await prismaClient.$queryRaw`
+    SELECT EXISTS(
+      SELECT
+        id
+      FROM comment
+      WHERE id = ${commentId} AND user_id = ${userId}
+    )
+  `;
+};

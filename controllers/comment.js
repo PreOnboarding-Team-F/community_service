@@ -33,3 +33,21 @@ export const getCommentList = async (req, res) => {
   );
   res.status(200).json(result);
 };
+
+export const updateComment = async (req, res) => {
+  const { boardId } = req.query;
+  const { commentId, content } = req.body;
+  const userId = req.userId;
+
+  if (!boardId || !commentId || !userId) {
+    throw new BadRequestException('KEY ERROR');
+  }
+
+  await commentService.updateComment(
+    userId,
+    Number(boardId),
+    commentId,
+    content
+  );
+  res.status(200).json({ message: 'Update Comment' });
+};
