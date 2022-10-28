@@ -4,9 +4,10 @@ import { UnauthorizedException } from '../util/exception/index.js';
 
 export const createComment = async (userId, boardId, content, parentId) => {
   const isExistPost = await commentRepository.getPostById(boardId);
-  // if (!isExistPost) {
-  //   throw new NotFoundException('잘못된 요청입니다.');
-  // }
+
+  if (!isExistPost) {
+    throw new NotFoundException('잘못된 요청입니다.');
+  }
 
   if (parentId) {
     return await commentRepository.createNestComment(

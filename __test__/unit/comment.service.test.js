@@ -1,8 +1,4 @@
-import {
-  ForbiddenException,
-  NotFoundException,
-  UnauthorizedException,
-} from '../../util/exception/index.js';
+import { NotFoundException } from '../../util/exception/index.js';
 
 import * as commentRepository from '../../models/comment.js';
 import * as commentService from '../../services/comment.js';
@@ -10,21 +6,12 @@ import * as commentService from '../../services/comment.js';
 jest.mock('../../models/comment.js');
 
 describe('comment Controller createComment', () => {
-  let userId, boardId, content, parentId;
-
-  beforeEach(() => {
-    userId = 1;
-    boardId = 1;
-    content = '댓글 테스트';
-    parentId = '2';
-  });
-
   it('commentRepository.createComment TEST', () => {
     const userId = '';
     const boardId = '';
     const content = '';
 
-    commentRepository.createComment = jest.fn();
+    commentRepository.getPostById = jest.fn(() => [{ boardId: 1 }]);
     commentService.createComment(userId, boardId, content);
 
     expect(commentRepository.createComment);
@@ -36,7 +23,7 @@ describe('comment Controller createComment', () => {
     const content = '';
     const parentId = '';
 
-    commentRepository.createComment = jest.fn();
+    commentRepository.getPostById = jest.fn(() => [{ boardId: 1 }]);
     commentService.createComment(userId, boardId, content, parentId);
 
     expect(commentRepository.createComment);
@@ -47,14 +34,16 @@ describe('Comment Controller getCommentList', () => {
   let boardId, commentId, parentId;
 
   beforeEach(() => {
-    (boardId = ''), (commentId = ''), (parentId = '');
+    boardId = 1;
+    commentId = 1;
+    parentId = 1;
   });
 
   it('게시글이 없는 경우', () => {
     commentRepository.getPostById = jest.fn();
 
     expect(async () => {
-      await commentService.getCommentList(commentId);
+      await commentService.getCommentList(boardId);
     }).rejects.toThrowError(NotFoundException);
   });
 
@@ -96,17 +85,17 @@ describe('comment Controller updatePost', () => {
   let userId, boardId, commentId, content;
 
   beforeEach(() => {
-    userId = '';
-    boardId = '';
-    commentId = '';
-    content = '';
+    userId = 1;
+    boardId = 1;
+    commentId = 1;
+    content = '댓글';
   });
 
   it('게시글이 없는 경우', () => {
     commentRepository.getPostById = jest.fn();
 
     expect(async () => {
-      await commentService.updateComment(commentId);
+      await commentService.getCommentList(boardId);
     }).rejects.toThrowError(NotFoundException);
   });
 
@@ -114,7 +103,7 @@ describe('comment Controller updatePost', () => {
     commentRepository.getCommentById = jest.fn();
 
     expect(async () => {
-      await commentService.updateComment(boardId);
+      await commentService.getCommentList(boardId);
     }).rejects.toThrowError(NotFoundException);
   });
 
@@ -150,7 +139,7 @@ describe('comment Controller deletePost', () => {
     commentRepository.getPostById = jest.fn();
 
     expect(async () => {
-      await commentService.updateComment(commentId);
+      await commentService.getCommentList(boardId);
     }).rejects.toThrowError(NotFoundException);
   });
 
@@ -158,18 +147,32 @@ describe('comment Controller deletePost', () => {
     commentRepository.getCommentById = jest.fn();
 
     expect(async () => {
-      await commentService.updateComment(boardId);
+      await commentService.getCommentList(boardId);
     }).rejects.toThrowError(NotFoundException);
   });
 
   it('commentRepository.deleteComment TEST', async () => {
-    const result = {
-      userId: 1,
-      boardId: 1,
-      commentId: 2,
-    };
-
-    commentRepository.deleteComment = jest.fn(result);
+    commentRepository.getPostById = jest.fn(() => [
+      {
+        boardId: 1,
+      },
+    ]);
+    commentRepository.getCommentById = jest.fn(() => [
+      {
+        commentId: 1,
+      },
+    ]);
+    commentRepository.getUserByComment = jest.fn(() => [
+      {
+        userId: 1,
+        commentId: 2,
+      },
+    ]);
+    commentRepository.getCommentByParentId = jest.fn(() => [
+      {
+        commentId: 1,
+      },
+    ]);
 
     await commentService.deleteComment(userId, boardId, commentId);
     expect(commentService.deleteComment);
