@@ -16,7 +16,7 @@ export const createComment = async (req, res) => {
     content,
     parentId
   );
-  res.status(201).json({ message: 'Create Comment' });
+  res.status(201).json({ message: 'CREATE COMMENT' });
 };
 
 export const getCommentList = async (req, res) => {
@@ -49,7 +49,7 @@ export const updateComment = async (req, res) => {
     commentId,
     content
   );
-  res.status(200).json({ message: 'Update Comment' });
+  res.status(200).json({ message: 'UPDATE SUCCESS' });
 };
 
 export const deleteComment = async (req, res) => {
@@ -67,5 +67,5 @@ export const deleteComment = async (req, res) => {
     commentId,
     userRole
   );
-  res.status(200).json({ message: 'Delete Comment' });
+  res.status(200).json({ message: 'DELETE SUCCESS' });
 };

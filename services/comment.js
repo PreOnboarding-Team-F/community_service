@@ -5,7 +5,7 @@ import { UnauthorizedException } from '../util/exception/index.js';
 export const createComment = async (userId, boardId, content, parentId) => {
   const isExistPost = await commentDao.getPostById(boardId);
   if (!isExistPost) {
-    throw new NotFoundException('게시글이 존재하지 않습니다.');
+    throw new NotFoundException('잘못된 요청입니다.');
   }
 
   if (parentId) {
@@ -23,13 +23,13 @@ export const createComment = async (userId, boardId, content, parentId) => {
 export const getCommentList = async (boardId, commentId) => {
   const isExistPost = await commentDao.getPostById(boardId);
   if (!isExistPost) {
-    throw new NotFoundException('게시글이 존재하지 않습니다.');
+    throw new NotFoundException('잘못된 요청입니다.');
   }
   if (commentId) {
     const isExistNextComment = await commentDao.getCommentByParentId(commentId);
 
     if (Object.values(isExistNextComment[0])[0] === 0n) {
-      throw new NotFoundException('댓글이 존재하지 않습니다.');
+      throw new NotFoundException('잘못된 요청입니다.');
     }
 
     return await commentDao.getNextCommentList(boardId, commentId);
@@ -44,11 +44,11 @@ export const updateComment = async (userId, boardId, commentId, content) => {
   const isMatchUser = await commentDao.getUserByComment(userId, commentId);
 
   if (!isExistPost) {
-    throw new NotFoundException('게시글이 존재하지 않습니다.');
+    throw new NotFoundException('잘못된 요청입니다.');
   }
 
   if (!isExistComment) {
-    throw new NotFoundException('댓글이 존재하지 않습니다.');
+    throw new NotFoundException('잘못된 요청입니다.');
   }
 
   if (Object.values(isMatchUser) === 0n) {
@@ -68,11 +68,11 @@ export const deleteComment = async (userId, boardId, commentId, userRole) => {
   const isExistParentCommentValue = Object.values(isExistParentComment[0])[0];
   console.log(isExistParentCommentValue);
   if (!isExistPost) {
-    throw new NotFoundException('게시글이 존재하지 않습니다.');
+    throw new NotFoundException('잘못된 요청입니다.');
   }
 
   if (!isExistComment) {
-    throw new NotFoundException('댓글이 존재하지 않습니다.');
+    throw new NotFoundException('잘못된 요청입니다.');
   }
 
   if (
@@ -86,5 +86,5 @@ export const deleteComment = async (userId, boardId, commentId, userRole) => {
     return await commentDao.deleteComment(commentId, boardId);
   }
 
-  throw new UnauthorizedException('권한이 없습니다.');
+  throw new UnauthorizedException('접근 권한이 없습니다.');
 };

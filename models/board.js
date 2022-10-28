@@ -5,40 +5,87 @@ export const BoardType = {
   OPERATION: 'operation',
 };
 
+const includeUser = {
+  user: {
+    select: {
+      id: true,
+      userId: true,
+      nickname: true,
+      role: true,
+    },
+  },
+};
+
 async function createPost(title, content, boardType, userId) {
   await prismaClient.board.create({
     data: {
       title,
       content,
-      board_type: boardType,
+      boardType,
       user: { connect: { id: userId } },
     },
   });
 }
 
-async function getPost(id) {
+async function findById(id) {
   return await prismaClient.board.findUnique({
     where: {
       id: parseInt(id),
     },
-    select: {
-      id: true,
-      title: true,
-      content: true,
-      board_type: true,
-      image_url: true,
-      user: {
-        select: {
-          user_id: true,
-          nickname: true,
-          role: true,
-        },
-      },
+    include: includeUser,
+  });
+}
+
+async function updatePost(id, updateData) {
+  await prismaClient.board.update({
+    where: {
+      id: parseInt(id),
     },
+    data: updateData,
+  });
+}
+
+async function deletePost(id) {
+  await prismaClient.board.delete({
+    where: {
+      id: parseInt(id),
+    },
+  });
+}
+
+async function getFreePosts() {
+  return await prismaClient.board.findMany({
+    where: {
+      boardType: BoardType.FREE,
+    },
+    include: includeUser,
+  });
+}
+
+async function getNoticePosts() {
+  return await prismaClient.board.findMany({
+    where: {
+      boardType: BoardType.NOTICE,
+    },
+    include: includeUser,
+  });
+}
+
+async function getOperationPosts() {
+  return await prismaClient.board.findMany({
+    where: {
+      boardType: BoardType.OPERATION,
+    },
+    include: includeUser,
   });
 }
 
 export default {
   createPost,
-  getPost,
+  updatePost,
+  findById,
+  deletePost,
+  getFreePosts,
+  getNoticePosts,
+  getOperationPosts,
 };
