@@ -46,6 +46,10 @@ User의 방문 기록을 통해서 User의 접속 시간대 통계를 내기 위
 |  | 댓글 작성  | POST  | /comment/post?boardId=value  | true |
 |  | 댓글 수정  | PATCH  | /comment/post?boardId=value  | true |
 |  | 댓글 삭제  | DELETE  | /comment/post?boardId=value  | true |
+| 통계 | 성별  | GET  | /statistics/gender  | true |
+|  | 나이  | GET  | /statistics/age  | true |
+|  | 접속시간 | GET  | /statistics/accesstime  | true |
+|  | 방문횟수 | GET  | /statistics/visit  | true |
 
 ## 구현 기능 관련
 <b>게시판 별 접근 권한</b>
