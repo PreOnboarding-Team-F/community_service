@@ -8,7 +8,7 @@ import boardService from '../../services/board.js';
 
 jest.mock('../../models/board.js');
 
-describe('Board Controller createPost', () => {
+describe('Board Service createPost', () => {
   it('boardRepository.createPost 실행 확인', () => {
     const title = '';
     const content = '';
@@ -21,7 +21,7 @@ describe('Board Controller createPost', () => {
   });
 });
 
-describe('Board Controller getFreePost', () => {
+describe('Board Service getFreePost', () => {
   let id;
 
   beforeEach(() => {
@@ -56,7 +56,7 @@ describe('Board Controller getFreePost', () => {
   });
 });
 
-describe('Board Controller getNoticePost', () => {
+describe('Board Service getNoticePost', () => {
   let id;
 
   beforeEach(() => {
@@ -91,7 +91,7 @@ describe('Board Controller getNoticePost', () => {
   });
 });
 
-describe('Board Controller getOperationPost', () => {
+describe('Board Service getOperationPost', () => {
   let id;
 
   beforeEach(() => {
@@ -126,7 +126,7 @@ describe('Board Controller getOperationPost', () => {
   });
 });
 
-describe('Board Controller updatePost', () => {
+describe('Board Service updatePost', () => {
   let id, updateData, userId;
 
   beforeEach(() => {
@@ -168,7 +168,7 @@ describe('Board Controller updatePost', () => {
   });
 });
 
-describe('Board Controller deletePost', () => {
+describe('Board Service deletePost', () => {
   let id, userId;
 
   beforeEach(() => {

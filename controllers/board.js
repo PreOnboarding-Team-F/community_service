@@ -6,7 +6,7 @@ const createPost = async (req, res) => {
 
   await boardService.createPost(title, content, boardType, userId);
 
-  res.status(201).send({ message: 'CREATE SUCCESS' });
+  res.status(201).json({ message: 'CREATE SUCCESS' });
 };
 
 const getFreePost = async (req, res) => {
@@ -14,7 +14,7 @@ const getFreePost = async (req, res) => {
 
   const post = await boardService.getFreePost(id);
 
-  res.status(200).send({ data: post });
+  res.status(200).json({ data: post });
 };
 
 const getNoticePost = async (req, res) => {
@@ -22,7 +22,7 @@ const getNoticePost = async (req, res) => {
 
   const post = await boardService.getNoticePost(id);
 
-  res.status(200).send({ data: post });
+  res.status(200).json({ data: post });
 };
 
 const getOperationPost = async (req, res) => {
@@ -30,7 +30,7 @@ const getOperationPost = async (req, res) => {
 
   const post = await boardService.getOperationPost(id);
 
-  res.status(200).send({ data: post });
+  res.status(200).json({ data: post });
 };
 
 const updatePost = async (req, res) => {
@@ -40,7 +40,7 @@ const updatePost = async (req, res) => {
 
   await boardService.updatePost(id, updateData, userId);
 
-  res.status(200).send({ message: 'UPDATE SUCCESS' });
+  res.status(200).json({ message: 'UPDATE SUCCESS' });
 };
 
 const deletePost = async (req, res) => {
@@ -49,25 +49,25 @@ const deletePost = async (req, res) => {
 
   await boardService.deletePost(id, userId);
 
-  res.status(200).send({ message: 'DELETE SUCCESS' });
+  res.status(200).json({ message: 'DELETE SUCCESS' });
 };
 
 const getFreePosts = async (req, res) => {
   const posts = await boardService.getFreePosts();
 
-  res.status(200).send({ data: posts });
+  res.status(200).json({ data: posts });
 };
 
 const getNoticePosts = async (req, res) => {
   const posts = await boardService.getNoticePosts();
 
-  res.status(200).send({ data: posts });
+  res.status(200).json({ data: posts });
 };
 
 const getOperationPosts = async (req, res) => {
   const posts = await boardService.getOperationPosts();
 
-  res.status(200).send({ data: posts });
+  res.status(200).json({ data: posts });
 };
 
 export default {
