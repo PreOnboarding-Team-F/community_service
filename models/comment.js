@@ -95,3 +95,21 @@ export const getUserByComment = async (userId, commentId) => {
     )
   `;
 };
+
+export const deleteComment = async (commentId, boardId) => {
+  return await prismaClient.$queryRaw`
+    DELETE 
+    FROM comment
+    WHERE id = ${commentId} AND board_id = ${boardId}
+  `;
+};
+
+export const leaveComment = async (commentId, boardId) => {
+  return await prismaClient.$queryRaw`
+    UPDATE
+      comment
+    SET 
+      content = '삭제된 댓글 입니다.'
+    WHERE id = ${commentId} AND board_id = ${boardId}
+  `;
+};

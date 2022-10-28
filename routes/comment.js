@@ -7,5 +7,6 @@ const router = express.Router();
 router.post('/post', isLogin, commentController.createComment);
 router.get('/post', commentController.getCommentList);
 router.patch('/post', isLogin, commentController.updateComment);
+router.delete('/post', commentController.deleteComment);
 
 export default router;

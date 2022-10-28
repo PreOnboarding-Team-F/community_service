@@ -51,3 +51,21 @@ export const updateComment = async (req, res) => {
   );
   res.status(200).json({ message: 'Update Comment' });
 };
+
+export const deleteComment = async (req, res) => {
+  const { boardId } = req.query;
+  const { userId, commentId, userRole } = req.body;
+  // const userId = req.userId;
+  // const userRole = req.role;
+
+  if (!userId || !boardId || !commentId) {
+    throw new BadRequestException('KEY ERROR');
+  }
+  await commentService.deleteComment(
+    userId,
+    Number(boardId),
+    commentId,
+    userRole
+  );
+  res.status(200).json({ message: 'Delete Comment' });
+};

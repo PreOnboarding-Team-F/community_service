@@ -57,3 +57,34 @@ export const updateComment = async (userId, boardId, commentId, content) => {
 
   return await commentDao.updateComment(userId, commentId, content);
 };
+
+export const deleteComment = async (userId, boardId, commentId, userRole) => {
+  const isExistPost = await commentDao.getPostById(boardId);
+  const isExistComment = await commentDao.getCommentById(commentId);
+  const isMatchUser = await commentDao.getUserByComment(userId, commentId);
+  const isExistParentComment = await commentDao.getCommentByParentId(commentId);
+
+  const isMatchUserValue = Object.values(isMatchUser[0])[0];
+  const isExistParentCommentValue = Object.values(isExistParentComment[0])[0];
+  console.log(isExistParentCommentValue);
+  if (!isExistPost) {
+    throw new NotFoundException('게시글이 존재하지 않습니다.');
+  }
+
+  if (!isExistComment) {
+    throw new NotFoundException('댓글이 존재하지 않습니다.');
+  }
+
+  if (
+    (userRole === 'admin' || isMatchUserValue === 1n) &&
+    isExistParentCommentValue === 1n
+  ) {
+    return await commentDao.leaveComment(commentId, boardId);
+  }
+
+  if (userRole === 'admin' || Object.values(isMatchUser[0])[0] === 1n) {
+    return await commentDao.deleteComment(commentId, boardId);
+  }
+
+  throw new UnauthorizedException('권한이 없습니다.');
+};
