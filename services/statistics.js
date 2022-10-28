@@ -168,6 +168,9 @@ export const getVisit = async () => {
 };
 
 function makeRatio(num, total) {
+  if (total === 0) {
+    return 0;
+  }
   const swap = Math.round((num / total) * 10000);
   return swap / 100;
 }
