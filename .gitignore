@@ -10,7 +10,6 @@
 # Icon must end with two \r
 Icon
 
-
 # Thumbnails
 ._*
 
@@ -202,3 +201,5 @@ dist
 coverage/
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,visualstudiocode,node
+
+.env.test
