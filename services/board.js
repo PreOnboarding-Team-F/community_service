@@ -17,7 +17,7 @@ async function getFreePost(id) {
     throw new NotFoundException('잘못된 요청입니다.');
   }
 
-  if (post.board_type !== BoardType.FREE) {
+  if (post.boardType !== BoardType.FREE) {
     throw new NotFoundException('잘못된 요청입니다.');
   }
   return post;
@@ -30,7 +30,7 @@ async function getNoticePost(id) {
     throw new NotFoundException('잘못된 요청입니다.');
   }
 
-  if (post.board_type !== BoardType.NOTICE) {
+  if (post.boardType !== BoardType.NOTICE) {
     throw new NotFoundException('잘못된 요청입니다.');
   }
   return post;
@@ -43,7 +43,7 @@ async function getOperationPost(id) {
     throw new NotFoundException('잘못된 요청입니다.');
   }
 
-  if (post.board_type !== BoardType.OPERATION) {
+  if (post.boardType !== BoardType.OPERATION) {
     throw new NotFoundException('잘못된 요청입니다.');
   }
   return post;

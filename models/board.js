@@ -9,7 +9,7 @@ const includeUser = {
   user: {
     select: {
       id: true,
-      user_id: true,
+      userId: true,
       nickname: true,
       role: true,
     },
@@ -21,7 +21,7 @@ async function createPost(title, content, boardType, userId) {
     data: {
       title,
       content,
-      board_type: boardType,
+      boardType,
       user: { connect: { id: userId } },
     },
   });
@@ -56,7 +56,7 @@ async function deletePost(id) {
 async function getFreePosts() {
   return await prismaClient.board.findMany({
     where: {
-      board_type: BoardType.FREE,
+      boardType: BoardType.FREE,
     },
     include: includeUser,
   });
@@ -65,7 +65,7 @@ async function getFreePosts() {
 async function getNoticePosts() {
   return await prismaClient.board.findMany({
     where: {
-      board_type: BoardType.NOTICE,
+      boardType: BoardType.NOTICE,
     },
     include: includeUser,
   });
@@ -74,7 +74,7 @@ async function getNoticePosts() {
 async function getOperationPosts() {
   return await prismaClient.board.findMany({
     where: {
-      board_type: BoardType.OPERATION,
+      boardType: BoardType.OPERATION,
     },
     include: includeUser,
   });
