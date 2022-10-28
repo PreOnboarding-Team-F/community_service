@@ -6,7 +6,7 @@ import {
 import boardController from '../controllers/board.js';
 import { body } from 'express-validator';
 import express from 'express';
-import { validate } from '../middleware/validate.js';
+import { validate } from '../middleware/validator.js';
 
 const router = express.Router();
 
