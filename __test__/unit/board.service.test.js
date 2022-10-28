@@ -39,7 +39,7 @@ describe('Board Controller getFreePost', () => {
   it('board type이 free가 아닌 경우', () => {
     boardRepository.findById = jest.fn(id => {
       return {
-        board_type: '',
+        boardType: '',
       };
     });
 
@@ -49,7 +49,7 @@ describe('Board Controller getFreePost', () => {
   });
 
   it('return post', async () => {
-    const result = { board_type: 'free' };
+    const result = { boardType: 'free' };
     boardRepository.findById = jest.fn(id => result);
     const post = await boardService.getFreePost(id);
     expect(post).toEqual(result);
@@ -74,7 +74,7 @@ describe('Board Controller getNoticePost', () => {
   it('board type이 notice가 아닌 경우', () => {
     boardRepository.findById = jest.fn(id => {
       return {
-        board_type: '',
+        boardType: '',
       };
     });
 
@@ -84,7 +84,7 @@ describe('Board Controller getNoticePost', () => {
   });
 
   it('return post', async () => {
-    const result = { board_type: 'notice' };
+    const result = { boardType: 'notice' };
     boardRepository.findById = jest.fn(id => result);
     const post = await boardService.getNoticePost(id);
     expect(post).toEqual(result);
@@ -109,7 +109,7 @@ describe('Board Controller getOperationPost', () => {
   it('board type이 operation이 아닌 경우', () => {
     boardRepository.findById = jest.fn(id => {
       return {
-        board_type: '',
+        boardType: '',
       };
     });
 
@@ -119,7 +119,7 @@ describe('Board Controller getOperationPost', () => {
   });
 
   it('return post', async () => {
-    const result = { board_type: 'operation' };
+    const result = { boardType: 'operation' };
     boardRepository.findById = jest.fn(id => result);
     const post = await boardService.getOperationPost(id);
     expect(post).toEqual(result);

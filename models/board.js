@@ -16,7 +16,7 @@ const includeUser = {
   },
 };
 
-async function createPost(title, content, boardType, userId) {
+const createPost = async (title, content, boardType, userId) => {
   await prismaClient.board.create({
     data: {
       title,
@@ -25,60 +25,60 @@ async function createPost(title, content, boardType, userId) {
       user: { connect: { id: userId } },
     },
   });
-}
+};
 
-async function findById(id) {
+const findById = async id => {
   return await prismaClient.board.findUnique({
     where: {
       id: parseInt(id),
     },
     include: includeUser,
   });
-}
+};
 
-async function updatePost(id, updateData) {
+const updatePost = async (id, updateData) => {
   await prismaClient.board.update({
     where: {
       id: parseInt(id),
     },
     data: updateData,
   });
-}
+};
 
-async function deletePost(id) {
+const deletePost = async id => {
   await prismaClient.board.delete({
     where: {
       id: parseInt(id),
     },
   });
-}
+};
 
-async function getFreePosts() {
+const getFreePosts = async () => {
   return await prismaClient.board.findMany({
     where: {
       boardType: BoardType.FREE,
     },
     include: includeUser,
   });
-}
+};
 
-async function getNoticePosts() {
+const getNoticePosts = async () => {
   return await prismaClient.board.findMany({
     where: {
       boardType: BoardType.NOTICE,
     },
     include: includeUser,
   });
-}
+};
 
-async function getOperationPosts() {
+const getOperationPosts = async () => {
   return await prismaClient.board.findMany({
     where: {
       boardType: BoardType.OPERATION,
     },
     include: includeUser,
   });
-}
+};
 
 export default {
   createPost,
